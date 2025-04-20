@@ -1,4 +1,3 @@
-
 /**
  * Machine Learning Classifiers
  * Implements XGBoost, Logistic Regression, and Gaussian models
@@ -134,11 +133,6 @@ export class PhishingClassifier {
   async predict(features: UrlFeatures): Promise<{
     prediction: 'safe' | 'suspicious' | 'dangerous';
     confidence: number;
-    scores: {
-      xgboost: number;
-      logistic: number;
-      gaussian: number;
-    };
   }> {
     if (!this.isLoaded) {
       await this.loadModels();
@@ -167,12 +161,7 @@ export class PhishingClassifier {
     
     return {
       prediction,
-      confidence: averageScore,
-      scores: {
-        xgboost: xgboostScore,
-        logistic: logisticScore,
-        gaussian: gaussianScore
-      }
+      confidence: averageScore
     };
   }
 }
