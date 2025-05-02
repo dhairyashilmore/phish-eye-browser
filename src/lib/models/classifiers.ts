@@ -1,3 +1,4 @@
+
 /**
  * Machine Learning Classifiers
  * Implements XGBoost, Logistic Regression, and Gaussian models
@@ -13,10 +14,13 @@ const WEIGHTS = {
   gaussian: [0.75, 0.65, 0.85, 0.55, 0.65, 0.55, 0.75, 0.9, 0.82, 0.87, 0.58]
 };
 
-// Threshold for safe classification
-const SAFETY_THRESHOLD = 0.65;
+// Thresholds for classification
+const THRESHOLDS = {
+  safe: 0.3,
+  suspicious: 0.6
+};
 
-// Model class that simulates the ML models
+// Model class that simulates the three different ML models
 export class PhishingClassifier {
   private models: {
     xgboost: tf.LayersModel | null;
@@ -128,8 +132,13 @@ export class PhishingClassifier {
 
   // Predict using all models
   async predict(features: UrlFeatures): Promise<{
-    prediction: 'safe' | 'dangerous';
+    prediction: 'safe' | 'suspicious' | 'dangerous';
     confidence: number;
+    scores: {
+      xgboost: number;
+      logistic: number;
+      gaussian: number;
+    };
   }> {
     if (!this.isLoaded) {
       await this.loadModels();
@@ -137,7 +146,8 @@ export class PhishingClassifier {
     
     const normalizedFeatures = normalizeFeatures(features);
     
-    // Get predictions from all models
+    // In a real app, we would use the trained models for inference
+    // For demo, we'll use our simulated inference
     const xgboostScore = this.simulateInference(normalizedFeatures, 'xgboost');
     const logisticScore = this.simulateInference(normalizedFeatures, 'logistic');
     const gaussianScore = this.simulateInference(normalizedFeatures, 'gaussian');
@@ -145,10 +155,24 @@ export class PhishingClassifier {
     // Average score from all models
     const averageScore = (xgboostScore + logisticScore + gaussianScore) / 3;
     
-    // Simple binary classification based on threshold
+    // Classify based on thresholds
+    let prediction: 'safe' | 'suspicious' | 'dangerous';
+    if (averageScore < THRESHOLDS.safe) {
+      prediction = 'safe';
+    } else if (averageScore < THRESHOLDS.suspicious) {
+      prediction = 'suspicious';
+    } else {
+      prediction = 'dangerous';
+    }
+    
     return {
-      prediction: averageScore > SAFETY_THRESHOLD ? 'safe' : 'dangerous',
-      confidence: averageScore
+      prediction,
+      confidence: averageScore,
+      scores: {
+        xgboost: xgboostScore,
+        logistic: logisticScore,
+        gaussian: gaussianScore
+      }
     };
   }
 }
