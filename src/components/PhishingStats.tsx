@@ -40,7 +40,7 @@ const PhishingStats = () => {
         <CardHeader className="pb-2">
           <CardTitle className="text-lg flex items-center">
             <Settings className="h-4 w-4 mr-2 text-purple-500" />
-            How PhishEye Works
+            How System Works
           </CardTitle>
           <CardDescription>Advanced ML detection</CardDescription>
         </CardHeader>
