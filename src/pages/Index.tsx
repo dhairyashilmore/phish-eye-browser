@@ -1,8 +1,9 @@
 
 import { useState } from 'react';
 import PhishingDetector from '@/components/PhishingDetector';
+import PhishingStats from '@/components/PhishingStats';
 import ExtensionInfo from '@/components/ExtensionInfo';
-import { Shield, AlertTriangle } from 'lucide-react';
+import { Shield } from 'lucide-react';
 
 const Index = () => {
   const [currentYear] = useState(new Date().getFullYear());
@@ -16,27 +17,17 @@ const Index = () => {
           <h1 className="text-3xl font-bold text-blue-900">PhishEye</h1>
         </div>
         <p className="text-gray-600 max-w-md mx-auto">
-          Detect risky websites and protect your online safety
+          Advanced machine learning phishing detection using ensemble classifiers
         </p>
       </header>
       
       {/* Main content */}
       <main className="flex-1 container mx-auto px-4 py-6 flex flex-col items-center">
-        {/* Helpful tips */}
-        <div className="max-w-md w-full mb-8 bg-amber-50 border border-amber-200 rounded-lg p-4">
-          <div className="flex items-start">
-            <AlertTriangle className="text-amber-500 h-5 w-5 mt-0.5 mr-3 flex-shrink-0" />
-            <div>
-              <h3 className="font-medium text-amber-800">Stay Safe Online</h3>
-              <p className="text-sm text-amber-700 mt-1">
-                PhishEye analyzes URLs and identifies security risks. Enter any suspicious link to check if it's safe before visiting.
-              </p>
-            </div>
-          </div>
-        </div>
-        
         {/* Phishing detector component */}
         <PhishingDetector />
+        
+        {/* Stats section */}
+        <PhishingStats />
         
         {/* Extension info */}
         <ExtensionInfo />
@@ -45,7 +36,7 @@ const Index = () => {
       {/* Footer */}
       <footer className="py-4 text-center text-sm text-gray-500">
         <p>© {currentYear} PhishEye - ML Phishing Detection System</p>
-        <p className="text-xs mt-1">Protecting you from online threats</p>
+        <p className="text-xs mt-1">Powered by XGBoost, Logistic Regression, and Gaussian models</p>
       </footer>
     </div>
   );
