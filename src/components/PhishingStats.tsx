@@ -48,7 +48,7 @@ const PhishingStats = () => {
           <ul className="text-sm space-y-2">
             <li className="flex items-start">
               <Search className="h-4 w-4 mr-2 text-blue-500 mt-0.5 flex-shrink-0" />
-              <span>Extracts 11+ URL features including entropy, length, and special characters</span>
+              <span>Extracts 60+ URL features including entropy, length, and special characters</span>
             </li>
             <li className="flex items-start">
               <Search className="h-4 w-4 mr-2 text-blue-500 mt-0.5 flex-shrink-0" />
